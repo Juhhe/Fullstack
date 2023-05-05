@@ -100,7 +100,8 @@ const App = () => {
       })
       .catch( () => {
         setGreenMessage(false)
-        setMessage(`Information of ${oldPerson.name} is not on server`)
+        setMessage(`Information of ${oldPerson.name} has already been removed from server`)
+        setPersons(persons.filter(person => person.id !== oldPerson.id))
         setTimeout(() => {
           setMessage(null)
         }
