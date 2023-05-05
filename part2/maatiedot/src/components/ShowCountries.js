@@ -1,6 +1,6 @@
 import weatherService from '../services/countries.js'
 
-const ShowCountries= ({ countries, setSearch }) => {
+const ShowCountries= ({ countries, weather, setSearch }) => {
 
     const len = countries.length
 
@@ -14,9 +14,8 @@ const ShowCountries= ({ countries, setSearch }) => {
     } else if (len === 1) {
         const country = countries[0]
 
-        const weather = weatherService.getWeather(country)
-
-        console.log(weather)
+        const temp = (weather.main.temp - 273.15).toFixed(2)
+        const wind = (weather.wind.speed * 0.44704).toFixed(2)
 
         return (
             <div>
@@ -31,8 +30,13 @@ const ShowCountries= ({ countries, setSearch }) => {
                 )}
 
                 <img src={country.flags.png} />
+
+                <h2>Weather in {country.capital}</h2>
+                <div>temperature {temp} Celsius</div>
+                <img src={`http://openweathermap.org/img/w/${weather.weather[0].icon}.png`} />
+                <div>wind {wind} m/s</div>
                 
-                <div>Temperature {273.15-weather.current.temp}</div>
+                
             </div>
         )
 

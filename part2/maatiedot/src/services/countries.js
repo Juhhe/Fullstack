@@ -4,7 +4,8 @@ const weather_api_key = process.env.REACT_APP_API_KEY
 
 const getWeather = (country) => {
     const [lat, lon] = country.capitalInfo.latlng
-    const request = axios.get(`https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&exclude=&appid=${weather_api_key}`)
+    const request = axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${weather_api_key}`)
+
     return request.then(response => response.data)
 }
 

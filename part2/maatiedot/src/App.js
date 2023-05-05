@@ -8,6 +8,7 @@ function App() {
 
   const [countries, setCountries] = useState([])
   const [search, setSearch] = useState('')
+  const [weather, setWeather] = useState()
 
   useEffect(() => {
     countryService
@@ -16,6 +17,9 @@ function App() {
         setCountries(response)
     })
   }, [])
+
+
+
   
   const handleSearchChange = (event) => {
     setSearch(event.target.value)
@@ -23,11 +27,21 @@ function App() {
 
   const countriesToShow = countries.filter(country => country.name.common.toLowerCase().includes(search.toLowerCase()))
 
+  useEffect(() => {
+    if (countriesToShow.length === 1) {
+      countryService
+      .getWeather(countriesToShow[0])
+      .then(response => {
+        setWeather(response)
+      })
+    }
+  }, [search])
+
 
   return (
     <div>
       find countries: <input value={search} onChange={handleSearchChange} />
-      <ShowCountries countries={countriesToShow} setSearch={setSearch} />
+      <ShowCountries countries={countriesToShow} weather={weather} setSearch={setSearch} />
     </div>
 
   );
