@@ -25,7 +25,7 @@ const App = () => {
 
   useEffect(hook, [])
 
-
+console
   const addPerson = (event) => {
     event.preventDefault()
     if (persons.some(person => person.name === newName)) {
@@ -47,38 +47,39 @@ const App = () => {
         setMessage(`Added ${returnedPerson.name}`)
         setTimeout(() => {
           setMessage(null)
-        }, 5000)
+        }, 3000)
       })
       .catch(error => {
+        // Print the error message from the backend
         setGreenMessage(false)
-        setMessage(`Cannot add ${personObject.name}`)
+        setMessage(error.response.data.error)
         setTimeout(() => {
           setMessage(null)
-        }, 5000)
+        }, 3000)
       })
   }
 
   // Remove person from phonebook and server, and display message whether it was successful or not
   const removePerson = (id) => {
 
-    const removedPerson = persons.find(person => person.id === id)
+    const removedPerson = persons.find(person => person._id === id)
 
     personService.remove(id)
       .then( () => {
         setGreenMessage(true)
-        setPersons(persons.filter(person => person.id !== id))
+        setPersons(persons.filter(person => person._id !== id))
         setMessage(`Removed ${removedPerson.name}`)
         setTimeout(() => {
           setMessage(null)
-        }, 5000)
+        }, 3000)
       })
       .catch( () => {
         setGreenMessage(false)
         setMessage(`Information of ${removedPerson.name} has already been removed from server`)
-        setPersons(persons.filter(person => person.id !== id))
+        setPersons(persons.filter(person => person._id !== id))
         setTimeout(() => {
           setMessage(null)
-        }, 5000)
+        }, 3000)
       })
   }
 
@@ -86,9 +87,9 @@ const App = () => {
     const changedPerson = { ...oldPerson, number: newNumber }
 
     personService
-      .update(oldPerson.id, changedPerson)
+      .update(oldPerson._id, changedPerson)
       .then(returnedPerson => {
-        setPersons(persons.map(person => person.id !== oldPerson.id ? person : returnedPerson))
+        setPersons(persons.map(person => person._id !== oldPerson._id ? person : returnedPerson))
         setNewName('')
         setNewNumber('')
         setGreenMessage(true)
@@ -96,16 +97,17 @@ const App = () => {
         setTimeout(() => {
           setMessage(null)
         }
-        , 5000)
+        , 3000)
       })
-      .catch( () => {
+      .catch(error => {
+        console.log(error)
         setGreenMessage(false)
         setMessage(`Information of ${oldPerson.name} has already been removed from server`)
-        setPersons(persons.filter(person => person.id !== oldPerson.id))
+        setPersons(persons.filter(person => person._id !== oldPerson._id))
         setTimeout(() => {
           setMessage(null)
         }
-        , 5000)
+        , 3000)
       })
 
 

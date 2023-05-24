@@ -5,7 +5,10 @@ const Persons = ({ personsToShow, removePerson }) => {
             {personsToShow.map(person =>
                 <li key={person.name}>
                     {person.name} {person.number}
-                    <button onClick={() => removePerson(person.id)}>delete</button>
+                    <button onClick={() => {
+                        removePerson(person._id)
+                    }}>delete</button>
+                        
                 </li>
                 
             )}

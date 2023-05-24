@@ -1,8 +1,7 @@
-POST http://localhost:3001/api/persons/2
+POST http://localhost:3001/api/notes/645c9bfb7291a3ddfc24cbc4
 Content-Type: application/json
 
 {
-  "name": "Arto Hellas",
-  "number": "040-123456"
+    "content": "loli",
+    "important": true
 }
-
